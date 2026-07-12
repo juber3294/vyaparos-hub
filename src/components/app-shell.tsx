@@ -48,7 +48,7 @@ export function AppShell({ children, title, subtitle, actions }: {
               return (
                 <Link
                   key={item.to}
-                  to={item.to}
+                  to={item.to as any}
                   className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
                     active
                       ? "bg-primary/10 text-primary font-semibold"
