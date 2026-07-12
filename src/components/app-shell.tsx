@@ -7,7 +7,8 @@ import {
 import type { ReactNode } from "react";
 import { company } from "@/lib/demo-data";
 
-const nav = [
+type NavItem = { to: string; label: string; icon: any; exact?: boolean; badge?: string };
+const nav: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/ai", label: "AI Center", icon: Sparkles, badge: "New" },
   { to: "/sales", label: "Sales", icon: ShoppingCart },
@@ -21,7 +22,7 @@ const nav = [
   { to: "/analytics", label: "Analytics", icon: LineChart },
   { to: "/employees", label: "Employees", icon: UserCog },
   { to: "/settings", label: "Settings", icon: Settings },
-] as const;
+];
 
 export function AppShell({ children, title, subtitle, actions }: {
   children: ReactNode; title: string; subtitle?: string; actions?: ReactNode;
