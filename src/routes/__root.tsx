@@ -78,10 +78,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "VyaparOS — Smart Business OS for Wholesale & Retail" },
-      { name: "description", content: "Cloud ERP for Indian wholesale and retail businesses: GST billing, inventory, customers, AI insights." },
+      {
+        name: "description",
+        content:
+          "Cloud ERP for Indian wholesale and retail businesses: GST billing, inventory, customers, AI insights.",
+      },
       { name: "author", content: "VyaparOS" },
       { property: "og:title", content: "VyaparOS — Smart Business OS" },
-      { property: "og:description", content: "Cloud ERP for Indian wholesale & retail with AI-powered insights." },
+      {
+        property: "og:description",
+        content: "Cloud ERP for Indian wholesale & retail with AI-powered insights.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -89,7 +96,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),

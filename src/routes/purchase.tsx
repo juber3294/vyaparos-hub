@@ -1,22 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell, Card, Btn, Badge, DataTable, TableToolbar, StatCard } from "@/components/app-shell";
+import {
+  AppShell,
+  Card,
+  Btn,
+  Badge,
+  DataTable,
+  TableToolbar,
+  StatCard,
+} from "@/components/app-shell";
 import { Plus, PackagePlus, IndianRupee, Truck, Boxes } from "lucide-react";
 import { suppliers, products, inr } from "@/lib/demo-data";
 
 export const Route = createFileRoute("/purchase")({
-  head: () => ({ meta: [{ title: "Purchase — VyaparOS" }, { name: "description", content: "Record supplier purchases with GST." }] }),
+  head: () => ({
+    meta: [
+      { title: "Purchase — VyaparOS" },
+      { name: "description", content: "Record supplier purchases with GST." },
+    ],
+  }),
   component: PurchasePage,
 });
 
 function PurchasePage() {
   const rows = suppliers.slice(0, 10).map((s, i) => {
     const amt = 40000 + i * 12000;
-    return { id: s.id, po: `PO/2026/${1201 + i}`, supplier: s.name, date: `2026-07-${String(2 + i).padStart(2,"0")}`,
-      items: 5 + (i % 6), amt, gst: Math.round(amt * 0.18), status: i % 3 === 0 ? "Received" : i % 3 === 1 ? "Partial" : "Pending" };
+    return {
+      id: s.id,
+      po: `PO/2026/${1201 + i}`,
+      supplier: s.name,
+      date: `2026-07-${String(2 + i).padStart(2, "0")}`,
+      items: 5 + (i % 6),
+      amt,
+      gst: Math.round(amt * 0.18),
+      status: i % 3 === 0 ? "Received" : i % 3 === 1 ? "Partial" : "Pending",
+    };
   });
 
-  const preview = products.slice(4, 9).map(p => ({ ...p, qty: 20 + Math.floor(Math.random()*30) }));
-  const sub = preview.reduce((s,p) => s + p.purchasePrice * p.qty, 0);
+  const preview = products.slice(4, 9).map((p, i) => ({ ...p, qty: 22 + i * 6 }));
+  const sub = preview.reduce((s, p) => s + p.purchasePrice * p.qty, 0);
   const expenses = 2500;
   const gst = Math.round(sub * 0.18);
   const total = sub + expenses + gst;
@@ -25,7 +46,11 @@ function PurchasePage() {
     <AppShell
       title="Purchase"
       subtitle="Record inward stock, GST, and supplier bills."
-      actions={<Btn><Plus className="h-4 w-4" /> New Purchase Entry</Btn>}
+      actions={
+        <Btn>
+          <Plus className="h-4 w-4" /> New Purchase Entry
+        </Btn>
+      }
     >
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatCard label="This Month" value={inr(1150000)} icon={IndianRupee} tone="primary" />
@@ -55,12 +80,16 @@ function PurchasePage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-xs uppercase text-muted-foreground border-b border-border">
-                  <th className="py-2">Item</th><th>HSN</th><th className="text-right">Qty</th>
-                  <th className="text-right">Rate</th><th className="text-right">GST</th><th className="text-right">Amount</th>
+                  <th className="py-2">Item</th>
+                  <th>HSN</th>
+                  <th className="text-right">Qty</th>
+                  <th className="text-right">Rate</th>
+                  <th className="text-right">GST</th>
+                  <th className="text-right">Amount</th>
                 </tr>
               </thead>
               <tbody>
-                {preview.map(it => (
+                {preview.map((it) => (
                   <tr key={it.id} className="border-b border-border">
                     <td className="py-3 font-medium">{it.name}</td>
                     <td className="text-muted-foreground">{it.hsn}</td>
@@ -91,7 +120,11 @@ function PurchasePage() {
             {suppliers.slice(0, 6).map((s, i) => (
               <li key={s.id} className="flex items-center gap-3">
                 <div className="grid h-9 w-9 place-items-center rounded-xl bg-secondary/10 text-secondary text-xs font-bold">
-                  {s.name.split(" ").map(w => w[0]).slice(0,2).join("")}
+                  {s.name
+                    .split(" ")
+                    .map((w) => w[0])
+                    .slice(0, 2)
+                    .join("")}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium truncate">{s.name}</div>
@@ -113,15 +146,33 @@ function PurchasePage() {
         <DataTable
           rows={rows}
           columns={[
-            { key: "po", label: "PO #", render: (r) => <span className="font-mono text-xs">{r.po}</span> },
+            {
+              key: "po",
+              label: "PO #",
+              render: (r) => <span className="font-mono text-xs">{r.po}</span>,
+            },
             { key: "supplier", label: "Supplier" },
             { key: "date", label: "Date" },
             { key: "items", label: "Items" },
             { key: "amt", label: "Amount", render: (r) => inr(r.amt) },
             { key: "gst", label: "GST", render: (r) => inr(r.gst) },
-            { key: "status", label: "Status", render: (r) => (
-              <Badge tone={r.status === "Received" ? "success" : r.status === "Partial" ? "warning" : "info"}>{r.status}</Badge>
-            ) },
+            {
+              key: "status",
+              label: "Status",
+              render: (r) => (
+                <Badge
+                  tone={
+                    r.status === "Received"
+                      ? "success"
+                      : r.status === "Partial"
+                        ? "warning"
+                        : "info"
+                  }
+                >
+                  {r.status}
+                </Badge>
+              ),
+            },
           ]}
         />
       </div>
@@ -138,5 +189,10 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 function Row({ label, value }: { label: string; value: string }) {
-  return (<div className="flex justify-between"><span className="text-muted-foreground">{label}</span><span className="font-medium">{value}</span></div>);
+  return (
+    <div className="flex justify-between">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="font-medium">{value}</span>
+    </div>
+  );
 }
